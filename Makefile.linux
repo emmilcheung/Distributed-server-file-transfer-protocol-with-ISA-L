@@ -1,0 +1,14 @@
+CC = gcc
+LIB = 
+
+all: myftpserver myftpclient
+
+myftpserver: myftpserver.c
+	${CC} -o myftpserver myftpserver.c myftp.c -lpthread -lisal
+
+myftpclient: myftpclient.c
+	${CC} -o myftpclient myftpclient.c myftp.c -lisal
+
+clean:
+	rm myftpserver
+	rm myftpclient	
