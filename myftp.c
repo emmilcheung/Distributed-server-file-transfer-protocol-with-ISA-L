@@ -378,7 +378,18 @@ int stripe_handler(int target_sd[],
       //this sd is active and be triggered, receive data from socket and 
       if(is_connected[i] && FD_ISSET(target_sd[i], &allset)){
         // printf("\t\trecv sd = %d\n", target_sd[i]);        
-        recv(target_sd[i], data_block[i], len, 0);
+
+		/*BEFORE CHANGE*/
+        // recv(target_sd[i], data_block[i], len, 0);
+
+		/*AFTER CHANGE*/
+		int bytes_received;
+		int offset = 0;
+		while((offset < len) && ((bytes_received = recv(target_sd[i], data_block[i]+offset, len, 0)) > 0)){
+			// write(fd, file_data, bytes_received);
+			offset += bytes_received;
+		}
+		
         // printf("\nblock no : %d\n%s",i,data_block[i]);
         done += 1;
         break;      
